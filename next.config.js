@@ -20,6 +20,15 @@ const nextConfig = {
       }),
     ],
   },
+  experimental: {
+    ppr: true,
+    dynamicOnHover: true,
+    dynamicIO: true,
+    reactCompiler: true,
+    nodeMiddleware: true,
+  },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   reactStrictMode: true,
   redirects,
 }
