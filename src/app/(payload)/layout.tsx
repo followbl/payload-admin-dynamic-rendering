@@ -4,7 +4,7 @@ import config from '@payload-config'
 import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { importMap } from './admin/importMap.js'
 import './custom.scss'
@@ -14,18 +14,26 @@ type Args = {
 }
 
 const serverFunction: ServerFunctionClient = async function (args) {
-  'use server'
+  "use server";
   return handleServerFunctions({
     ...args,
     config,
     importMap,
-  })
-}
+  });
+};
 
-const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-    {children}
-  </RootLayout>
-)
+const Layout = async ({ children }: Args) => {
+  return (
+    <Suspense>
+      <RootLayout
+        config={config}
+        importMap={importMap}
+        serverFunction={serverFunction}
+      >
+        {children}
+      </RootLayout>
+    </Suspense>
+  );
+};
 
-export default Layout
+export default Layout;
